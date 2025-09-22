@@ -9,8 +9,8 @@ dotenv.config();
 const app = express();
 
 app.use(express.json());
-app.use("/task", taskRoutes);
-app.use("/user", userRoutes);
+app.use("/tasks", taskRoutes);
+app.use("/users", userRoutes);
 
 const PORT = process.env.PORT || 5000;
 

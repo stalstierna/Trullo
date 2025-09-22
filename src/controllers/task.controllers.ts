@@ -50,6 +50,7 @@ export async function getTaskById(req: Request, res: Response): Promise<void> {
 
 //UPDATE STATUS
 //FELHANTERING
+//Uppdatera finishedBy om status ändras till done
 export async function updateStatus(req: Request, res: Response): Promise<void> {
   const { id } = req.params;
   const { status } = req.body;

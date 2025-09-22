@@ -1,4 +1,4 @@
-import mongoose, { Schema, InferSchemaType, mongo } from "mongoose";
+import mongoose, { Schema, InferSchemaType } from "mongoose";
 
 const taskSchema = new Schema(
   {
