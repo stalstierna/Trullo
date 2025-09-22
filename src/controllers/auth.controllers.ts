@@ -5,8 +5,7 @@ import { Request, Response } from "express";
 import bcrypt from "bcrypt";
 import { signToken } from "./user.controllers.js";
 
-//CREATE/REGISTER
-//TODO -Städa vad man får tillbaka
+//REGISTER USER
 export async function registerUser(req: Request, res: Response): Promise<void> {
   const { email, password, name } = req.body;
   try {
@@ -15,6 +14,30 @@ export async function registerUser(req: Request, res: Response): Promise<void> {
     const user = await UserModel.create({
       email,
       name,
+      passwordHash,
+    });
+
+    const token = signToken(user);
+
+    res.status(201).json({ user, token });
+  } catch (error) {
+    res.status(500).json({ error: "Failed to create user" });
+  }
+}
+
+//REGISTER ADMIN
+export async function registerAdmin(
+  req: Request,
+  res: Response
+): Promise<void> {
+  const { email, password, name, role } = req.body;
+  try {
+    const passwordHash = await bcrypt.hash(password, 10);
+
+    const user = await UserModel.create({
+      email,
+      name,
+      role,
       passwordHash,
     });
 

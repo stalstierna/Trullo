@@ -14,7 +14,7 @@ import { use } from "framer-motion/client";
 //HJÄLPFUNKTION SKAPA WEBTOKEN
 export function signToken(user: HydratedDocument<User>) {
   return jwt.sign(
-    { sub: user._id.toString() },
+    { sub: user._id.toString(), role: user.role },
     process.env.JWT_SECRET as string,
     { expiresIn: "1h" }
   );
@@ -23,7 +23,7 @@ export function signToken(user: HydratedDocument<User>) {
 //GET ME
 export async function getMe(req: AuthRequest, res: Response) {
   try {
-    const user = await UserModel.findById(req.user.sub);
+    const user = await UserModel.findById(req.user.id);
 
     if (!user) {
       return res.status(404).json({ error: "User not found" });
@@ -40,7 +40,7 @@ export async function updateMe(req: AuthRequest, res: Response) {
   const { name, email } = req.body;
   try {
     const user = await UserModel.findByIdAndUpdate(
-      req.user.sub,
+      req.user.id,
       {
         name,
         email,
@@ -61,7 +61,7 @@ export async function updateMe(req: AuthRequest, res: Response) {
 //DELETE ME
 export async function deleteMe(req: AuthRequest, res: Response) {
   try {
-    const user = await UserModel.findByIdAndDelete(req.user.sub);
+    const user = await UserModel.findByIdAndDelete(req.user.id);
 
     if (!user) {
       res.status(404).json({ error: "User not found" });

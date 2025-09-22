@@ -19,9 +19,16 @@ export function auth(req: AuthRequest, res: Response, next: NextFunction) {
       return res.status(401).json({ error: "Invalid or missing token" });
     }
 
-    const payload = jwt.verify(token, process.env.JWT_SECRET as string);
+    const payload = jwt.verify(token, process.env.JWT_SECRET as string) as {
+      sub: string;
+      role: string;
+    };
 
-    req.user = payload;
+    req.user = {
+      id: payload.sub,
+      role: payload.role,
+    };
+
     next();
   } catch (error) {
     return res.status(401).json({ error: "Invalid or expired token" });
