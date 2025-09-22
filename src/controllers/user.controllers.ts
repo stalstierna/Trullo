@@ -74,6 +74,36 @@ export async function deleteMe(req: AuthRequest, res: Response) {
 }
 
 //UPDATE PASSWORD
+export async function updatePassword(req: AuthRequest, res: Response) {
+  const { oldPassword, newPassword } = req.body;
+  try {
+    if (!oldPassword || !newPassword) {
+      return res
+        .status(400)
+        .json({ error: "Both old and new password are required" });
+    }
+    const user = await UserModel.findById(req.user.id);
+
+    if (!user) {
+      res.status(404).json({ error: "User not found" });
+      return;
+    }
+
+    const isMatch = await bcrypt.compare(oldPassword, user.passwordHash);
+    if (!isMatch) {
+      res.status(404).json({ error: "Incorrect old password" });
+      return;
+    }
+
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    user.passwordHash = hashedPassword;
+
+    await user.save();
+    res.status(200).json({ message: "Password updated successfully", user });
+  } catch (error) {
+    res.status(500).json({ error: "Failed to update password" });
+  }
+}
 
 //-------------------------------------------------------------------------
 
@@ -111,6 +141,7 @@ export async function getUserById(req: Request, res: Response): Promise<void> {
 //UPDATE USER
 export async function updateUser(req: Request, res: Response): Promise<void> {
   const { id } = req.params;
+  const { email, name, role } = req.body;
 
   if (!mongoose.isValidObjectId(id)) {
     res.status(400).json({ error: "ID must be valid ObjectID" });
@@ -118,10 +149,14 @@ export async function updateUser(req: Request, res: Response): Promise<void> {
   }
 
   try {
-    const updatedUser = await UserModel.findByIdAndUpdate(id, req.body, {
-      new: true,
-      runValidators: true,
-    });
+    const updatedUser = await UserModel.findByIdAndUpdate(
+      id,
+      { email, name, role },
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
     if (!updatedUser) {
       res.status(404).json({ error: "User not found" });
       return;

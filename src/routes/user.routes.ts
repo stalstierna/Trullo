@@ -7,6 +7,7 @@ import {
   getMe,
   updateMe,
   deleteMe,
+  updatePassword,
 } from "../controllers/user.controllers.js";
 
 import {
@@ -28,7 +29,7 @@ router.get("/me", auth, getMe);
 //Current user
 router.put("/me", auth, updateMe);
 router.delete("/me", auth, deleteMe);
-// router.put("/me/password", auth, updatePassword);
+router.put("/me/password", auth, updatePassword);
 
 //Admin user
 router.get("/", auth, requireAdmin, getUsers);
