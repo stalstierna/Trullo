@@ -2,14 +2,11 @@ import { TaskModel } from "../models/task.model.js";
 import { Request, Response } from "express";
 import mongoose from "mongoose";
 
-//Todo
-// Felhantering
-
 //CREATE
 export async function createTask(req: Request, res: Response): Promise<void> {
   try {
     const task = await TaskModel.create(req.body);
-    res.status(201).json(task);
+    res.status(201).json({ message: "Task created", task });
   } catch (error) {
     res.status(500).json({ error: "Failed to create task" });
   }
@@ -49,8 +46,6 @@ export async function getTaskById(req: Request, res: Response): Promise<void> {
 }
 
 //UPDATE STATUS
-//FELHANTERING
-//Uppdatera finishedBy om status ändras till done
 export async function updateStatus(req: Request, res: Response): Promise<void> {
   const { id } = req.params;
   const { status } = req.body;
@@ -61,21 +56,21 @@ export async function updateStatus(req: Request, res: Response): Promise<void> {
   }
 
   try {
-    const updatedTask = await TaskModel.findByIdAndUpdate(
-      id,
-      { status },
-      {
-        new: true,
-        runValidators: true,
-      }
-    ).populate({ path: "assignedTo" });
+    const task = await TaskModel.findById(id);
 
-    if (!updatedTask) {
+    if (!task) {
       res.status(404).json({ error: "Task not found" });
       return;
     }
 
-    res.json(updatedTask);
+    if (status === "done" && task.status !== "done") {
+      task.finishedAt = new Date();
+    }
+
+    task.status = status;
+
+    await task.save();
+    res.json(task);
   } catch (error) {
     res.status(500).json({ error: "Failed to update task" });
   }
