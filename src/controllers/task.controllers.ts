@@ -48,7 +48,6 @@ export async function getTaskById(req: Request, res: Response): Promise<void> {
 }
 
 //UPDATE STATUS
-//Ta bort finischedAt om man går från done till nåt annat??
 export async function updateStatus(
   req: AuthRequest,
   res: Response

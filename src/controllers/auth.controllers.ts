@@ -71,7 +71,7 @@ export async function loginUser(req: Request, res: Response): Promise<void> {
     }
 
     const token = signToken(user);
-    res.status(201).json({ user, token });
+    res.status(200).json({ user, token });
   } catch (error) {
     res.status(500).json({ error: "Failed to login user" });
   }

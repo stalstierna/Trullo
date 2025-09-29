@@ -90,7 +90,7 @@ export async function updatePassword(req: AuthRequest, res: Response) {
 
     const isMatch = await bcrypt.compare(oldPassword, user.passwordHash);
     if (!isMatch) {
-      res.status(404).json({ error: "Incorrect old password" });
+      res.status(401).json({ error: "Incorrect old password" });
       return;
     }
 
