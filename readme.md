@@ -48,6 +48,7 @@ Applikationen är ett **REST API** med följande huvudfunktioner:
 
 ## Vidareutveckling
 
+- 🔒 Zod-validering för att validera inkommande requests
 - 🏷️ Tags på tasks
 - 📂 Projects där flera tasks kan höra ihop
 - 🌱 Seed-script för att fylla databasen med testdata
