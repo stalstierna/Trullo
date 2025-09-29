@@ -5,7 +5,6 @@ import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { AuthRequest } from "../types.js";
-import { use } from "framer-motion/client";
 
 //TODO
 //Felhantering

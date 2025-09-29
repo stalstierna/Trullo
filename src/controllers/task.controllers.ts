@@ -1,6 +1,8 @@
 import { TaskModel } from "../models/task.model.js";
 import { Request, Response } from "express";
 import mongoose from "mongoose";
+import { UserModel } from "../models/user.model.js";
+import { AuthRequest } from "../types.js";
 
 //CREATE
 export async function createTask(req: Request, res: Response): Promise<void> {
@@ -46,7 +48,11 @@ export async function getTaskById(req: Request, res: Response): Promise<void> {
 }
 
 //UPDATE STATUS
-export async function updateStatus(req: Request, res: Response): Promise<void> {
+//Ta bort finischedAt om man går från done till nåt annat??
+export async function updateStatus(
+  req: AuthRequest,
+  res: Response
+): Promise<void> {
   const { id } = req.params;
   const { status } = req.body;
 
@@ -65,6 +71,11 @@ export async function updateStatus(req: Request, res: Response): Promise<void> {
 
     if (status === "done" && task.status !== "done") {
       task.finishedAt = new Date();
+      task.finishedBy = req.user.id;
+    }
+    if (status !== "done" && task.status === "done") {
+      task.finishedAt = null as any;
+      task.finishedBy = null as any;
     }
 
     task.status = status;

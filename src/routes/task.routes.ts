@@ -7,6 +7,7 @@ import {
   updateStatus,
   assignUser,
 } from "../controllers/task.controllers.js";
+import { auth } from "../middleware/auth.middleware.js";
 
 const router = Router();
 
@@ -20,7 +21,7 @@ router.get("/", getTasks);
 router.get("/:id", getTaskById);
 
 //UPDATE STATUS
-router.put("/:id/status", updateStatus);
+router.put("/:id/status", auth, updateStatus);
 
 //ASSIGN
 router.put("/:id/assign", assignUser);
