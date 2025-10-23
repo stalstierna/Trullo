@@ -5,7 +5,7 @@ dotenv.config();
 
 export async function connectDB() {
   await mongoose.connect(process.env.MONGODB_URI as string, {
-    dbName: "trulloDatabase",
+    dbName: "TrulloDatabase",
   });
   console.log("Connected to database");
 }
