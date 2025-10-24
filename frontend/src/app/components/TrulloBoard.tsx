@@ -14,10 +14,8 @@ export default function TrulloBoard() {
       try {
         // const res = await fetch("http://trullo-pi.vercel.app/tasks");
         const res = await fetch("http://localhost:3000/tasks");
-        console.log("Response status:", res.status);
         if (!res.ok) throw new Error(`Server error: ${res.status}`);
         const data: TaskTypes[] = await res.json();
-        console.log("Tasks från backend:", data);
         setTasks(data);
       } catch (err: unknown) {
         if (err instanceof Error) setError(err.message);
@@ -29,7 +27,21 @@ export default function TrulloBoard() {
     getTasks();
   }, []);
 
-  console.log(tasks);
+  const handleAddTask = async (title: string, status: TaskTypes["status"]) => {
+    try {
+      const res = await fetch("http://localhost:3000/tasks", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ title, status }),
+      });
+      if (!res.ok) throw new Error("Något gick fel vid skapande av task");
+      const data = await res.json();
+      const newTask: TaskTypes = data.task;
+      setTasks((prev) => [...prev, { ...newTask }]);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   if (loading) return <p>Laddar tasks...</p>;
   if (error) return <p className="text-red-600">Fel: {error}</p>;
@@ -37,14 +49,23 @@ export default function TrulloBoard() {
   return (
     <section className="flex justify-between gap-2">
       <TaskCard
+        key="to-do-card"
         title="To-Do"
         tasks={tasks.filter((t) => t.status === "to-do")}
+        onAddTask={handleAddTask}
       />
       <TaskCard
+        key="in progress-card"
         title="In Progress"
         tasks={tasks.filter((t) => t.status === "in progress")}
+        onAddTask={handleAddTask}
       />
-      <TaskCard title="Done" tasks={tasks.filter((t) => t.status === "done")} />
+      <TaskCard
+        key="done-card"
+        title="Done"
+        tasks={tasks.filter((t) => t.status === "done")}
+        onAddTask={handleAddTask}
+      />
 
       <UserList />
     </section>

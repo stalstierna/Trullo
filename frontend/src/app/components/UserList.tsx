@@ -12,10 +12,8 @@ export default function UserList() {
       try {
         // const res = await fetch("http://trullo-pi.vercel.app/tasks");
         const res = await fetch("http://localhost:3000/users");
-        console.log("Response status:", res.status);
         if (!res.ok) throw new Error(`Server error: ${res.status}`);
         const data: UserTypes[] = await res.json();
-        console.log("Tasks från backend:", data);
         setUsers(data);
       } catch (err: unknown) {
         if (err instanceof Error) setError(err.message);
@@ -26,8 +24,6 @@ export default function UserList() {
 
     getUsers();
   }, []);
-
-  console.log(users);
 
   if (loading) return <p>Laddar användare...</p>;
   if (error) return <p className="text-red-600">Fel: {error}</p>;
