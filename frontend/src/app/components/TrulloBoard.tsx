@@ -51,18 +51,21 @@ export default function TrulloBoard() {
       <TaskCard
         key="to-do-card"
         title="To-Do"
+        color="text-pink-500"
         tasks={tasks.filter((t) => t.status === "to-do")}
         onAddTask={handleAddTask}
       />
       <TaskCard
         key="in progress-card"
         title="In Progress"
+        color="text-orange-400"
         tasks={tasks.filter((t) => t.status === "in progress")}
         onAddTask={handleAddTask}
       />
       <TaskCard
         key="done-card"
         title="Done"
+        color="text-green-500"
         tasks={tasks.filter((t) => t.status === "done")}
         onAddTask={handleAddTask}
       />

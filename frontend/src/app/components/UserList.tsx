@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { UserTypes } from "../types/user";
 import { FaPen } from "react-icons/fa6";
+import { FaPlus, FaCircleChevronRight } from "react-icons/fa6";
 
 export default function UserList() {
   const [users, setUsers] = useState<UserTypes[]>([]);
@@ -38,13 +39,21 @@ export default function UserList() {
               key={user._id}
               className="border-b-[0.5px] h-10 flex items-center justify-between"
             >
-              <p className="text-sm px-3">{user.name}</p>
-              <FaPen className="h-3" />
+              <div className="flex items-center">
+                <FaCircleChevronRight className="text-md text-amber-600 bg-white rounded-full" />
+                <p className="text-sm px-3">{user.name}</p>
+              </div>
+              {/* <FaPen className="h-3" /> */}
             </div>
           ))
         ) : (
           <p className="text-sm text-gray-400 italic px-3">Inga användare</p>
         )}
+      </div>
+      <div className=" flex justify-end pt-3">
+        <button className="flex justify-center items-center h-5 w-5 bg-green-700 hover:opacity-70 rounded-full cursor-pointer text-sm">
+          <FaPlus />
+        </button>
       </div>
     </article>
   );

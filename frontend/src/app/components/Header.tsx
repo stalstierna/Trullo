@@ -7,7 +7,7 @@ export default function Header() {
       <div className="flex gap-3">
         <input
           placeholder="Sök"
-          className="bg-zinc-700 border-white border rounded-sm w-3xl px-2"
+          className="bg-zinc-700 border-white border rounded-sm max-w-3xl min-w-md px-2"
         ></input>
         <button className="bg-blue-400 border-0 rounded-sm px-3 py-1">
           Skapa

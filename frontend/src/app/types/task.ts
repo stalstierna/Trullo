@@ -10,6 +10,7 @@ export type TaskTypes = {
 export type TaskCardProps = {
   title: string;
   tasks: TaskTypes[];
+  color: string;
   onAddTask: (
     title: string,
     status: TaskTypes["status"],
