@@ -32,7 +32,8 @@ router.delete("/me", auth, deleteMe);
 router.put("/me/password", auth, updatePassword);
 
 //Admin user
-router.get("/", auth, requireAdmin, getUsers);
+// router.get("/", auth, requireAdmin, getUsers);
+router.get("/", getUsers);
 router.get("/:id", auth, requireAdmin, getUserById);
 router.put("/:id", auth, requireAdmin, updateUser);
 router.delete("/:id", auth, requireAdmin, deleteUser);

@@ -1,3 +1,5 @@
+import { FiBell } from "react-icons/fi";
+
 export default function Header() {
   return (
     <header className="bg-zinc-800 text-white flex justify-between items-center h-16 px-10">
@@ -12,8 +14,8 @@ export default function Header() {
         </button>
       </div>
       <div className="flex gap-4">
-        <button className="rounded-md bg-blue-400 w-8 h-8 flex justify-center items-center text-sm">
-          R
+        <button className="rounded-md bg-blue-400 w-8 h-8 flex justify-center items-center text-md">
+          <FiBell />
         </button>
         <button className="rounded-full bg-pink-700 w-8 h-8 flex justify-center items-center text-sm">
           <p className="leading-none">AS</p>
