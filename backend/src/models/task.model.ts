@@ -20,6 +20,11 @@ const taskSchema = new Schema(
       ref: "User",
       default: null,
     },
+    project: {
+      type: Schema.Types.ObjectId,
+      ref: "Project",
+      required: true,
+    },
   },
   { timestamps: true }
 );

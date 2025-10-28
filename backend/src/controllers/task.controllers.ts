@@ -4,16 +4,6 @@ import mongoose from "mongoose";
 import { UserModel } from "../models/user.model.js";
 import { AuthRequest } from "../types.js";
 
-//CREATE
-export async function createTask(req: Request, res: Response): Promise<void> {
-  try {
-    const task = await TaskModel.create(req.body);
-    res.status(201).json({ message: "Task created", task });
-  } catch (error) {
-    res.status(500).json({ error: "Failed to create task" });
-  }
-}
-
 //GET ALL
 export async function getTasks(req: Request, res: Response): Promise<void> {
   try {

@@ -1,6 +1,6 @@
 import { Router } from "express";
 import {
-  createTask,
+  // createTask,
   getTasks,
   getTaskById,
   deleteTask,
@@ -12,7 +12,7 @@ import { auth } from "../middleware/auth.middleware.js";
 const router = Router();
 
 //POST
-router.post("/", createTask);
+// router.post("/", createTask);
 
 //GET
 router.get("/", getTasks);

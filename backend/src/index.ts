@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import { connectDB } from "./db.js";
 import taskRoutes from "./routes/task.routes.js";
 import userRoutes from "./routes/user.routes.js";
+import projectRoutes from "./routes/project.routes.js";
 
 dotenv.config();
 
@@ -20,6 +21,7 @@ app.use(cors()); // öppnar för alla origins (endast utveckling!)
 app.use(express.json());
 app.use("/tasks", taskRoutes);
 app.use("/users", userRoutes);
+app.use("/projects", projectRoutes);
 
 const PORT = process.env.PORT || 5000;
 
