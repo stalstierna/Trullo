@@ -23,17 +23,14 @@ app.use("/tasks", taskRoutes);
 app.use("/users", userRoutes);
 app.use("/projects", projectRoutes);
 
-// const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5000;
 
-// await connectDB()
-//   .then(() => {
-//     app.listen(PORT, () => {
-//       console.log(`Server running on port ${PORT}`);
-//     });
-//   })
-//   .catch((err) => {
-//     console.log("Error connecting to MongoDB");
-//   });
-connectDB().catch((err) => console.log("Error connecting to MongoDB"));
-
-export default app;
+await connectDB()
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
+    });
+  })
+  .catch((err) => {
+    console.log("Error connecting to MongoDB");
+  });
