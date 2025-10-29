@@ -34,6 +34,6 @@ app.use("/projects", projectRoutes);
 //   .catch((err) => {
 //     console.log("Error connecting to MongoDB");
 //   });
-await connectDB;
+connectDB().catch((err) => console.log("Error connecting to MongoDB"));
 
 export default app;
