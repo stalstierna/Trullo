@@ -26,7 +26,10 @@ export default function TaskCard({
   };
 
   return (
-    <article className="bg-zinc-900 rounded-xl h-fit w-72 text-white px-3 py-4 shadow-md shadow-zinc-800 ">
+    <article
+      className="bg-zinc-900/90 rounded-xl h-fit w-72 text-white px-3 py-4 shadow-md shadow-zinc-800 "
+      style={{ backdropFilter: "blur(2px)" }}
+    >
       <div className="flex items-center gap-3 pb-4">
         <FaRegCircle className={color} />
         <h2>{title}</h2>
@@ -43,7 +46,7 @@ export default function TaskCard({
         <div className="flex flex-col mt-3 w-full">
           <input
             type="text"
-            className="flex-1 px-2 py-1 mb-3 rounded-md bg-zinc-800 text-white"
+            className="flex-1 px-2 py-1 mb-3 rounded-md bg-zinc-900/60 text-white"
             value={newTaskTitle}
             onChange={(e) => setNewTaskTitle(e.target.value)}
             placeholder="Ny task..."
@@ -66,7 +69,7 @@ export default function TaskCard({
         </div>
       ) : (
         <button
-          className="bg-zinc-800 px-3 mt-3 w-full text-left rounded-md py-1 cursor-pointer hover:opacity-70"
+          className="bg-zinc-900/60 px-3 mt-3 w-full text-left rounded-md py-1 cursor-pointer hover:opacity-70"
           onClick={() => setIsAdding(true)}
         >
           + Lägg till task

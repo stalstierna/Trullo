@@ -47,7 +47,7 @@ export default function Task({ task }: TaskProps) {
 
   return (
     <>
-      <div className="bg-zinc-700 rounded-md flex flex-row justify-between items-center py-2 px-4 cursor-grab hover:outline">
+      <div className="bg-zinc-900/70 rounded-md flex flex-row justify-between items-center py-2 px-4 cursor-grab hover:outline">
         <div className="flex flex-col gap-1">
           <div className="h-2 w-12 bg-green-700 rounded-3xl"></div>
           <p className="px-1">{currentTask.title}</p>
