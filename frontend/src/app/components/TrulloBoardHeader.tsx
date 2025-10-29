@@ -1,4 +1,10 @@
-export default function TrulloHeader() {
+type Project = {
+  _id: string;
+  title: string;
+  description?: string;
+};
+
+export default function TrulloBoardHeader({ project }: { project: Project }) {
   return (
     <>
       <section
@@ -6,7 +12,7 @@ export default function TrulloHeader() {
         style={{ backdropFilter: "blur(1px)" }}
       >
         <h2 className="text-white font-bold text-xl text-shadow-lg text-shadow-zinc-500">
-          Mitt projekt
+          {project.title}
         </h2>
       </section>
     </>

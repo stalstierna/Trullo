@@ -48,6 +48,32 @@ export async function getProjects(req: Request, res: Response): Promise<void> {
   }
 }
 
+//GET PROJECT BY ID
+export async function getProjectById(
+  req: Request,
+  res: Response
+): Promise<void> {
+  const { projectId } = req.params;
+
+  if (!mongoose.isValidObjectId(projectId)) {
+    res.status(400).json({ error: "ID must be valid ObjectID" });
+    return;
+  }
+
+  try {
+    const project = await ProjectModel.findById(projectId).populate("tasks");
+
+    if (!project) {
+      res.status(404).json({ error: "Project not found" });
+      return;
+    }
+
+    res.json(project);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to get project" });
+  }
+}
+
 //ASSIGN MEMBERS
 export async function assignMembers(
   req: Request,
