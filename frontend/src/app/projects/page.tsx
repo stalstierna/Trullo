@@ -6,11 +6,14 @@ type PageProps = {
 };
 
 export default async function ProjectPage({ params }: PageProps) {
-  const projectId = "6900c42d8d6b315420f6188d";
+  const projectId = "6902312071e8889e25c12022";
 
-  const res = await fetch(`http://localhost:3000/projects/${projectId}`, {
-    cache: "no-store",
-  });
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/projects/${projectId}`,
+    {
+      cache: "no-store",
+    }
+  );
 
   if (!res.ok) {
     console.error("Failed to fetch project:", res.status, await res.text());
@@ -22,7 +25,7 @@ export default async function ProjectPage({ params }: PageProps) {
     <>
       <TrulloBoardHeader project={project} />
       <div className=" px-10 py-10">
-        <TrulloBoard />
+        <TrulloBoard projectId={projectId} />
       </div>
     </>
   );

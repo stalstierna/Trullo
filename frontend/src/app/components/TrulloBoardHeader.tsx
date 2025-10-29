@@ -1,10 +1,10 @@
-type Project = {
-  _id: string;
-  title: string;
-  description?: string;
-};
+import { ProjectTypes } from "../types/project";
 
-export default function TrulloBoardHeader({ project }: { project: Project }) {
+export default function TrulloBoardHeader({
+  project,
+}: {
+  project: ProjectTypes;
+}) {
   return (
     <>
       <section

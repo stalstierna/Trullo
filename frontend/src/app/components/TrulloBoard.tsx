@@ -3,8 +3,13 @@ import { useEffect, useState } from "react";
 import TaskCard from "./TaskCard";
 import { TaskTypes } from "../types/task";
 import UserList from "./UserList";
+import { ProjectTypes } from "../types/project";
 
-export default function TrulloBoard() {
+export type TrulloBoardProps = {
+  projectId: string;
+};
+
+export default function TrulloBoard({ projectId }: TrulloBoardProps) {
   const [tasks, setTasks] = useState<TaskTypes[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -13,10 +18,12 @@ export default function TrulloBoard() {
     const getTasks = async () => {
       try {
         // const res = await fetch("http://trullo-pi.vercel.app/tasks");
-        const res = await fetch("http://localhost:3000/tasks");
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/projects/${projectId}`
+        );
         if (!res.ok) throw new Error(`Server error: ${res.status}`);
-        const data: TaskTypes[] = await res.json();
-        setTasks(data);
+        const data: ProjectTypes = await res.json();
+        setTasks(data.tasks);
       } catch (err: unknown) {
         if (err instanceof Error) setError(err.message);
       } finally {
@@ -25,15 +32,18 @@ export default function TrulloBoard() {
     };
 
     getTasks();
-  }, []);
+  }, [projectId]);
 
   const handleAddTask = async (title: string, status: TaskTypes["status"]) => {
     try {
-      const res = await fetch("http://localhost:3000/tasks", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ title, status }),
-      });
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/projects/${projectId}/task`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ title, status }),
+        }
+      );
       if (!res.ok) throw new Error("Något gick fel vid skapande av task");
       const data = await res.json();
       const newTask: TaskTypes = data.task;
@@ -70,7 +80,7 @@ export default function TrulloBoard() {
         onAddTask={handleAddTask}
       />
 
-      <UserList />
+      <UserList projectId={projectId} />
     </section>
   );
 }

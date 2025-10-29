@@ -13,7 +13,9 @@ export default function Task({ task }: TaskProps) {
     if (users.length === 0) {
       setLoadingUsers(true);
       try {
-        const res = await fetch("http://localhost:3000/users");
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/3000/users`
+        );
         const data = await res.json();
         setUsers(data);
       } catch (err) {
@@ -28,7 +30,7 @@ export default function Task({ task }: TaskProps) {
   const handleAssign = async (user: UserTypes) => {
     try {
       const res = await fetch(
-        `http://localhost:3000/tasks/${currentTask._id}/assign`,
+        `${process.env.NEXT_PUBLIC_API_URL}/tasks/${currentTask._id}/assign`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },

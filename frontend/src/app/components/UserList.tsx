@@ -2,8 +2,10 @@ import { useState, useEffect } from "react";
 import { UserTypes } from "../types/user";
 import { FaPen } from "react-icons/fa6";
 import { FaPlus, FaCircleChevronRight } from "react-icons/fa6";
+import { ProjectTypes } from "../types/project";
+import { TrulloBoardProps } from "./TrulloBoard";
 
-export default function UserList() {
+export default function UserList({ projectId }: TrulloBoardProps) {
   const [users, setUsers] = useState<UserTypes[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -11,11 +13,13 @@ export default function UserList() {
   useEffect(() => {
     const getUsers = async () => {
       try {
-        // const res = await fetch("http://trullo-pi.vercel.app/tasks");
-        const res = await fetch("http://localhost:3000/users");
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/projects/${projectId}/`
+        );
         if (!res.ok) throw new Error(`Server error: ${res.status}`);
-        const data: UserTypes[] = await res.json();
-        setUsers(data);
+        const data: ProjectTypes = await res.json();
+        setUsers(data.members);
+        // console.log(data.createdBy);
       } catch (err: unknown) {
         if (err instanceof Error) setError(err.message);
       } finally {
@@ -24,7 +28,7 @@ export default function UserList() {
     };
 
     getUsers();
-  }, []);
+  }, [projectId]);
 
   if (loading) return <p>Laddar användare...</p>;
   if (error) return <p className="text-red-600">Fel: {error}</p>;

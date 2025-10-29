@@ -11,8 +11,12 @@ export async function createProject(
   req: Request,
   res: Response
 ): Promise<void> {
+  const { createdBy } = req.body;
   try {
-    const project = await ProjectModel.create(req.body);
+    const project = await ProjectModel.create({
+      ...req.body,
+      members: createdBy,
+    });
     res.status(201).json({ message: "Project created", project });
   } catch (error) {
     res.status(500).json({ error: "Failed to create project" });
@@ -61,7 +65,9 @@ export async function getProjectById(
   }
 
   try {
-    const project = await ProjectModel.findById(projectId).populate("tasks");
+    const project = await ProjectModel.findById(projectId)
+      .populate("tasks")
+      .populate("members");
 
     if (!project) {
       res.status(404).json({ error: "Project not found" });
@@ -90,7 +96,7 @@ export async function assignMembers(
   try {
     const updatedProject = await ProjectModel.findByIdAndUpdate(
       projectId,
-      { members: userIds },
+      { $addToSet: { members: { $each: userIds } } },
       {
         new: true,
         runValidators: true,
