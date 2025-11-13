@@ -27,7 +27,7 @@ export default function TaskCard({
 
   return (
     <article
-      className="bg-zinc-900/90 rounded-xl h-fit w-72 text-white px-3 py-4 shadow-md shadow-zinc-800 "
+      className="bg-zinc-900/90 rounded-xl h-fit w-full text-white px-3 py-4 shadow-md shadow-zinc-800 "
       style={{ backdropFilter: "blur(2px)" }}
     >
       <div className="flex items-center gap-3 pb-4">
@@ -43,7 +43,7 @@ export default function TaskCard({
       </div>
 
       {isAdding ? (
-        <div className="flex flex-col mt-3 w-full">
+        <div className="flex flex-col mt-3">
           <input
             type="text"
             className="flex-1 px-2 py-1 mb-3 rounded-md bg-zinc-900/60 text-white"

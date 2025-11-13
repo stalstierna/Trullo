@@ -57,7 +57,7 @@ export default function TrulloBoard({ projectId }: TrulloBoardProps) {
   if (error) return <p className="text-red-600">Fel: {error}</p>;
 
   return (
-    <section className="flex justify-between gap-2">
+    <section className="flex justify-between gap-10">
       <TaskCard
         key="to-do-card"
         title="To-Do"

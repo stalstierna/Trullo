@@ -1,5 +1,5 @@
-import TrulloBoard from "../components/TrulloBoard";
-import TrulloBoardHeader from "../components/TrulloBoardHeader";
+import TrulloBoard from "../../components/TrulloBoard";
+import TrulloBoardHeader from "../../components/TrulloBoardHeader";
 
 type PageProps = {
   params: { projectId: string };

@@ -34,7 +34,7 @@ export default function UserList({ projectId }: TrulloBoardProps) {
   if (error) return <p className="text-red-600">Fel: {error}</p>;
 
   return (
-    <article className="relative h-fit w-56 text-white px-3 py-4 border border-black overflow-hidden">
+    <article className="relative h-fit min-w-60 text-white px-3 py-4 border border-black overflow-hidden">
       {/* <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat bg-fixed"
         // style={{
